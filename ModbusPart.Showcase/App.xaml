@@ -1,0 +1,20 @@
+﻿<Application x:Class="ModbusPart.Showcase.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:ModbusPart.Showcase"
+             xmlns:sys="clr-namespace:System;assembly=mscorlib"
+             StartupUri="MainWindow.xaml">
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/WPFToolkit;component/Color/AccentColor/BlueAccentColor.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/WPFToolkit;component/Color/PrimaryColor/GrayPrimaryColor.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/WPFToolkit;component/Color/ThemeBrush.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/WPFToolkit;component/Color/ControlsBrush.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/WPFToolkit;component/Themes/Generic.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/WPFToolkit;component/Size/FontSize.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+
+    </Application.Resources>
+</Application>

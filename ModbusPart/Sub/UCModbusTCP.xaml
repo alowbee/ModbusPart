@@ -1,0 +1,267 @@
+﻿<UserControl
+    x:Class="ModbusPart.Sub.UCModbusTCP"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:Lang="clr-namespace:ModbusPart.Properties.Lang"
+    xmlns:controls="clr-namespace:WPFToolkit.Controls;assembly=WPFToolkit"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:rule="clr-namespace:ModbusPart.Rules"
+    xmlns:sub="clr-namespace:ModbusPart.Sub"
+    xmlns:wpfassist="clr-namespace:WPFToolkit.Assist;assembly=WPFToolkit"
+    FontSize="{DynamicResource NormalFontSize}"
+    Foreground="{DynamicResource PrimaryForeground}"
+    mc:Ignorable="d">
+    <controls:AnimationContentControl>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="5" />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+
+            <UniformGrid Grid.Row="2" Columns="1">
+                <Grid Margin="2">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="130" />
+                        <ColumnDefinition Width="2" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Border>
+                        <TextBlock
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Text="{x:Static Lang:Lang.Enable}" />
+                    </Border>
+                    <controls:SwitchToggle
+                        Grid.Column="2"
+                        FontFamily="Oswald,Yahei"
+                        IsChecked="{Binding IsEnable, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                </Grid>
+                <Grid Margin="2">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="130" />
+                        <ColumnDefinition Width="2" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Border>
+                        <TextBlock
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Text="{x:Static Lang:Lang.GatewayName}" />
+                    </Border>
+                    <TextBox
+                        Grid.Column="2"
+                        FontFamily="Oswald,Yahei"
+                        Text="{Binding GatewayName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                </Grid>
+                <Grid Margin="2" IsEnabled="{Binding IsEnable, Mode=OneWay}">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="130" />
+                        <ColumnDefinition Width="2" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Border>
+                        <TextBlock
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Text="{x:Static Lang:Lang.IP_Address}" />
+                    </Border>
+                    <!--<controls:IPAddressControl Grid.Column="2" IPAddress="{Binding IP,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />-->
+                    <TextBox
+                        Grid.Column="2"
+                        CharacterCasing="Lower"
+                        FontFamily="Oswald,Yahei"
+                        InputMethod.IsInputMethodEnabled="False"
+                        ToolTip="{Binding RelativeSource={x:Static RelativeSource.Self}, Path=(Validation.Errors)[0].ErrorContent}">
+                        <TextBox.Text>
+                            <Binding
+                                Mode="TwoWay"
+                                Path="IP"
+                                UpdateSourceTrigger="PropertyChanged">
+                                <Binding.ValidationRules>
+                                    <rule:IPRangeValidationRule ValidatesOnTargetUpdated="True" />
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </TextBox.Text>
+                    </TextBox>
+                </Grid>
+
+                <Grid Margin="2" IsEnabled="{Binding IsEnable, Mode=OneWay}">
+                    <Grid.ColumnDefinitions>
+
+
+                        <ColumnDefinition Width="130" />
+                        <ColumnDefinition Width="2" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Border>
+                        <TextBlock
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Text="{x:Static Lang:Lang.Port}" />
+                    </Border>
+                    <controls:NumberTextBox
+                        Grid.Column="2"
+                        FontFamily="Oswald,Yahei"
+                        ToolTip="{Binding RelativeSource={x:Static RelativeSource.Self}, Path=(Validation.Errors)[0].ErrorContent}">
+                        <controls:NumberTextBox.Text>
+                            <Binding
+                                Mode="TwoWay"
+                                Path="Port"
+                                UpdateSourceTrigger="PropertyChanged">
+                                <Binding.ValidationRules>
+                                    <rule:MinValidationRuleForint Min="0" ValidatesOnTargetUpdated="True" />
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </controls:NumberTextBox.Text>
+                    </controls:NumberTextBox>
+                </Grid>
+                <Grid Margin="2" IsEnabled="{Binding IsEnable, Mode=OneWay}">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="130" />
+                        <ColumnDefinition Width="2" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Border>
+                        <TextBlock
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Text="{x:Static Lang:Lang.Retry}" />
+                    </Border>
+
+                    <controls:NumberTextBox
+                        Grid.Column="2"
+                        wpfassist:ControlAssist.WaterMark="{x:Static Lang:Lang.Range_0_255}"
+                        FontFamily="Oswald,Yahei"
+                        ToolTip="{Binding RelativeSource={x:Static RelativeSource.Self}, Path=(Validation.Errors)[0].ErrorContent}">
+                        <controls:NumberTextBox.Text>
+                            <Binding
+                                Mode="TwoWay"
+                                Path="Retry"
+                                UpdateSourceTrigger="PropertyChanged">
+                                <Binding.ValidationRules>
+                                    <rule:RangeValidationRuleForint
+                                        Max="255"
+                                        Min="0"
+                                        ValidatesOnTargetUpdated="True" />
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </controls:NumberTextBox.Text>
+
+                    </controls:NumberTextBox>
+                </Grid>
+                <Grid Margin="2" IsEnabled="{Binding IsEnable, Mode=OneWay}">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="130" />
+                        <ColumnDefinition Width="2" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Border>
+                        <TextBlock
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Text="{x:Static Lang:Lang.Time_Out}" />
+                    </Border>
+                    <controls:NumberTextBox
+                        Grid.Column="2"
+                        wpfassist:ControlAssist.WaterMark="{x:Static Lang:Lang.Unit_ms}"
+                        FontFamily="Oswald,Yahei"
+                        ToolTip="{Binding RelativeSource={x:Static RelativeSource.Self}, Path=(Validation.Errors)[0].ErrorContent}">
+                        <controls:NumberTextBox.Text>
+                            <Binding
+                                Mode="TwoWay"
+                                Path="TimeOut"
+                                UpdateSourceTrigger="PropertyChanged">
+                                <Binding.ValidationRules>
+                                    <rule:MinValidationRuleForint Min="0" ValidatesOnTargetUpdated="True" />
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </controls:NumberTextBox.Text>
+                    </controls:NumberTextBox>
+                </Grid>
+                <Grid Margin="2" IsEnabled="{Binding IsEnable, Mode=OneWay}">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="130" />
+                        <ColumnDefinition Width="2" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Border>
+                        <TextBlock
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Text="{x:Static Lang:Lang.Update_Period}" />
+                    </Border>
+                    <controls:NumberTextBox
+                        Grid.Column="2"
+                        wpfassist:ControlAssist.WaterMark="{x:Static Lang:Lang.Unit_ms}"
+                        FontFamily="Oswald,Yahei"
+                        ToolTip="{Binding RelativeSource={x:Static RelativeSource.Self}, Path=(Validation.Errors)[0].ErrorContent}">
+                        <controls:NumberTextBox.Text>
+                            <Binding
+                                Mode="TwoWay"
+                                Path="UpdatePeriod"
+                                UpdateSourceTrigger="PropertyChanged">
+                                <Binding.ValidationRules>
+                                    <rule:MinValidationRuleForint Min="0" ValidatesOnTargetUpdated="True" />
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </controls:NumberTextBox.Text>
+                    </controls:NumberTextBox>
+                </Grid>
+                <Grid Margin="2">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="130" />
+                        <ColumnDefinition Width="2" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="2" />
+                        <ColumnDefinition Width="100" />
+                    </Grid.ColumnDefinitions>
+                    <Border>
+                        <TextBlock
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Text="{x:Static Lang:Lang.Device_Amount}" />
+                    </Border>
+                    <StackPanel
+                        Grid.Column="2"
+                        VerticalAlignment="Center"
+                        Orientation="Horizontal">
+
+                        <TextBlock
+                            Grid.Column="2"
+                            VerticalAlignment="Center"
+                            FontFamily="Oswald,Yahei">
+                            <TextBlock.Text>
+                                <Binding
+                                    Mode="TwoWay"
+                                    Path="DeviceNum"
+                                    ValidatesOnDataErrors="True">
+                                    <Binding.ValidationRules>
+                                        <rule:RangeValidationRuleForint Max="255" Min="0" />
+                                    </Binding.ValidationRules>
+                                </Binding>
+                            </TextBlock.Text>
+
+                        </TextBlock>
+                        <TextBlock Margin="10,0" VerticalAlignment="Center">/</TextBlock>
+                        <TextBlock VerticalAlignment="Center" FontFamily="Oswald,Yahei">255</TextBlock>
+                    </StackPanel>
+                    <Button
+                        Grid.Column="4"
+                        Margin="2,0"
+                        Background="{DynamicResource AccentBackground}"
+                        BorderBrush="{DynamicResource AccentDarkBrush}"
+                        Command="{Binding AddDeviceCommand}"
+                        Content="{x:Static Lang:Lang.Add_Device}" />
+                </Grid>
+                <Button
+                    Grid.Column="3"
+                    Margin="2"
+                    Background="Red"
+                    BorderBrush="DarkRed"
+                    Command="{Binding DeletePortCommand}"
+                    Content="{x:Static Lang:Lang.Delete_this_Port}" />
+            </UniformGrid>
+        </Grid>
+    </controls:AnimationContentControl>
+</UserControl>

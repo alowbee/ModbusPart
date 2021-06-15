@@ -1,0 +1,628 @@
+﻿<UserControl
+    x:Class="ModbusPart.Sub.UCDevice"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:Lang="clr-namespace:ModbusPart.Properties.Lang"
+    xmlns:controls="clr-namespace:WPFToolkit.Controls;assembly=WPFToolkit"
+    xmlns:converter="clr-namespace:ModbusPart.Converter"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:data="clr-namespace:ModbusPart.Data"
+    xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+    xmlns:local="clr-namespace:ModbusPart.Sub"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:rules="clr-namespace:ModbusPart.Rules"
+    xmlns:wpfassist="clr-namespace:WPFToolkit.Assist;assembly=WPFToolkit"
+    FontSize="{DynamicResource NormalFontSize}"
+    Foreground="{DynamicResource PrimaryForeground}"
+    mc:Ignorable="d">
+    <UserControl.Resources>
+        <DataTemplate x:Key="HeaderStyle">
+            <TextBlock
+                HorizontalAlignment="Center"
+                Foreground="{DynamicResource AccentDarkBrush}"
+                Text="{Binding}"
+                TextAlignment="Center"
+                TextWrapping="Wrap" />
+        </DataTemplate>
+        <Style x:Key="contentCenterStyle" TargetType="{x:Type TextBlock}">
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="Margin" Value="1" />
+        </Style>
+        <Style
+            x:Key="contentTextboxStyle"
+            BasedOn="{StaticResource TextBoxWithWaterMarkStyle}"
+            TargetType="{x:Type TextBox}">
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="Margin" Value="1" />
+            <Setter Property="ToolTip" Value="{Binding RelativeSource={x:Static RelativeSource.Self}, Path=(Validation.Errors)[0].ErrorContent}" />
+        </Style>
+        <converter:ReadMapTypeConverter x:Key="ReadMapTypeConverter" />
+        <converter:WriteMapTypeConverter x:Key="WriteMapTypeConverter" />
+        <converter:FuncToEnableConverter x:Key="FuncToEnableConverter" />
+        <converter:TagAmountConverter x:Key="TagAmountConverter" />
+        <converter:ReadMapFuncConverter x:Key="ReadMapFuncConverter" />
+        <converter:WriteMapFuncConverter x:Key="WriteMapFuncConverter" />
+    </UserControl.Resources>
+    <controls:AnimationContentControl>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="5" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="5" />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <UniformGrid Grid.Row="1" HorizontalAlignment="Left">
+                    <Grid Margin="2">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="130" />
+                            <ColumnDefinition Width="2" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Border>
+                            <TextBlock
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                Text="{x:Static Lang:Lang.Enable}" />
+                        </Border>
+                        <controls:SwitchToggle
+                            Grid.Column="2"
+                            FontFamily="Oswald,Yahei"
+                            IsChecked="{Binding IsEnable, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                    </Grid>
+                    <Grid Margin="2">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="130" />
+                            <ColumnDefinition Width="2" />
+                            <ColumnDefinition Width="*" MinWidth="130" />
+                        </Grid.ColumnDefinitions>
+                        <Border>
+                            <TextBlock
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                Text="{x:Static Lang:Lang.GatewayName}" />
+                        </Border>
+                        <TextBlock
+                            Grid.Column="2"
+                            VerticalAlignment="Center"
+                            FontFamily="Oswald,Yahei"
+                            Text="{Binding Path=GatewayName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                    </Grid>
+                    <Grid Margin="2" IsEnabled="{Binding IsEnable, Mode=OneWay}">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="130" />
+                            <ColumnDefinition Width="2" />
+                            <ColumnDefinition Width="*" MinWidth="130" />
+                        </Grid.ColumnDefinitions>
+                        <Border>
+                            <TextBlock
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                Text="{x:Static Lang:Lang.TagAmount}" />
+                        </Border>
+                        <StackPanel
+                            Grid.Column="2"
+                            VerticalAlignment="Center"
+                            Orientation="Horizontal">
+                            <TextBlock>
+                                <TextBlock.Text>
+                                    <MultiBinding
+                                        Converter="{StaticResource TagAmountConverter}"
+                                        Mode="TwoWay"
+                                        UpdateSourceTrigger="PropertyChanged">
+                                        <Binding Path="ReadMap.Count" />
+                                        <Binding Path="WriteMap.Count" />
+                                        <MultiBinding.ValidationRules>
+                                            <rules:RangeValidationRuleForint Max="512" Min="0" />
+                                        </MultiBinding.ValidationRules>
+                                    </MultiBinding>
+
+                                </TextBlock.Text>
+                            </TextBlock>
+                            <TextBlock Margin="10,0">/</TextBlock>
+                            <TextBlock Text="512" />
+                        </StackPanel>
+
+                    </Grid>
+                    <Grid Margin="2" IsEnabled="{Binding IsEnable, Mode=OneWay}">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="130" />
+                            <ColumnDefinition Width="2" />
+                            <ColumnDefinition Width="*" MinWidth="150" />
+                        </Grid.ColumnDefinitions>
+                        <Border>
+                            <TextBlock
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                Text="{x:Static Lang:Lang.Name}" />
+                        </Border>
+                        <TextBox
+                            Grid.Column="2"
+                            FontFamily="Oswald,Yahei"
+                            Text="{Binding Path=Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                    </Grid>
+                    <Grid Margin="2" IsEnabled="{Binding IsEnable, Mode=OneWay}">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="130" />
+                            <ColumnDefinition Width="2" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Border>
+                            <TextBlock
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                Text="{x:Static Lang:Lang.ErrorRegister}"
+                                TextWrapping="Wrap" />
+                        </Border>
+                        <controls:NumberTextBox
+                            Grid.Column="2"
+                            wpfassist:ControlAssist.WaterMark="{x:Static Lang:Lang.Range_1_65535}"
+                            FontFamily="Oswald,Yahei"
+                            ToolTip="{Binding RelativeSource={x:Static RelativeSource.Self}, Path=(Validation.Errors)[0].ErrorContent}">
+                            <controls:NumberTextBox.Text>
+                                <Binding
+                                    Mode="TwoWay"
+                                    NotifyOnValidationError="True"
+                                    Path="Error_reg"
+                                    UpdateSourceTrigger="PropertyChanged">
+                                    <Binding.ValidationRules>
+                                        <rules:RangeValidationRuleForint
+                                            Max="255"
+                                            Min="0"
+                                            ValidatesOnTargetUpdated="True" />
+                                    </Binding.ValidationRules>
+                                </Binding>
+                            </controls:NumberTextBox.Text>
+                        </controls:NumberTextBox>
+                    </Grid>
+                    <Grid />
+                    <Grid Margin="2" IsEnabled="{Binding IsEnable, Mode=OneWay}">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="130" />
+                            <ColumnDefinition Width="2" />
+                            <ColumnDefinition Width="*" MinWidth="130" />
+                        </Grid.ColumnDefinitions>
+                        <Border>
+                            <TextBlock
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                Text="{x:Static Lang:Lang.Station}" />
+                        </Border>
+                        <controls:NumberTextBox
+                            Grid.Column="2"
+                            wpfassist:ControlAssist.WaterMark="{x:Static Lang:Lang.Range_0_255}"
+                            FontFamily="Oswald,Yahei"
+                            ToolTip="{Binding RelativeSource={x:Static RelativeSource.Self}, Path=(Validation.Errors)[0].ErrorContent}">
+                            <controls:NumberTextBox.Text>
+                                <Binding
+                                    Mode="TwoWay"
+                                    NotifyOnValidationError="True"
+                                    Path="Station"
+                                    UpdateSourceTrigger="PropertyChanged">
+                                    <Binding.ValidationRules>
+                                        <rules:RangeValidationRuleForint
+                                            Max="255"
+                                            Min="0"
+                                            ValidatesOnTargetUpdated="True" />
+                                    </Binding.ValidationRules>
+                                </Binding>
+                            </controls:NumberTextBox.Text>
+                        </controls:NumberTextBox>
+                    </Grid>
+                    <Grid Margin="2">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="130" />
+                            <ColumnDefinition Width="2" />
+                            <ColumnDefinition Width="*" MinWidth="130" />
+                        </Grid.ColumnDefinitions>
+                        <Border>
+                            <TextBlock
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                Text="{x:Static Lang:Lang.ReadLength}"
+                                TextWrapping="Wrap" />
+                        </Border>
+                        <controls:NumberTextBox
+                            Grid.Column="2"
+                            FontFamily="Oswald,Yahei"
+                            ToolTip="{Binding RelativeSource={x:Static RelativeSource.Self}, Path=(Validation.Errors)[0].ErrorContent}">
+                            <controls:NumberTextBox.Text>
+                                <Binding
+                                    Mode="TwoWay"
+                                    NotifyOnValidationError="True"
+                                    Path="Device_Read_Limitlen"
+                                    UpdateSourceTrigger="PropertyChanged">
+                                    <Binding.ValidationRules>
+                                        <rules:RangeValidationRuleForint
+                                            Max="100"
+                                            Min="0"
+                                            ValidatesOnTargetUpdated="True" />
+                                    </Binding.ValidationRules>
+                                </Binding>
+                            </controls:NumberTextBox.Text>
+                        </controls:NumberTextBox>
+
+                    </Grid>
+                    <Button
+                        Background="Red"
+                        BorderBrush="DarkRed"
+                        Command="{Binding DeleteDeviceCommand}"
+                        Content="{x:Static Lang:Lang.Deletethisdevice}" />
+
+                </UniformGrid>
+            </Grid>
+
+            <TabControl
+                Grid.Row="2"
+                Grid.ColumnSpan="2"
+                Margin="5,0"
+                IsEnabled="{Binding IsEnable, Mode=OneWay}">
+                <TabItem Header="{x:Static Lang:Lang.ReadRegisterMapping}">
+                    <Grid>
+                        <DataGrid
+                            AutoGenerateColumns="False"
+                            CanUserReorderColumns="False"
+                            CanUserSortColumns="False"
+                            CellEditEnding="ReadDataGrid_CellEditEnding"
+                            ItemsSource="{Binding ReadMap, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                            SelectedItem="{Binding CurrentItem, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                            VerticalScrollBarVisibility="Auto">
+
+                            <DataGrid.Columns>
+                                <!--  index  -->
+                                <DataGridTextColumn
+                                    Width="0.7*"
+                                    Binding="{Binding Index, UpdateSourceTrigger=PropertyChanged}"
+                                    ElementStyle="{StaticResource contentCenterStyle}"
+                                    FontFamily="Oswald,Yahei"
+                                    Header="{x:Static Lang:Lang.Index}"
+                                    HeaderTemplate="{StaticResource HeaderStyle}"
+                                    IsReadOnly="True" />
+
+                                <!--  function  -->
+                                <DataGridTemplateColumn
+                                    Width="1.3*"
+                                    Header="{x:Static Lang:Lang.Function}"
+                                    HeaderTemplate="{StaticResource HeaderStyle}">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <ComboBox
+                                                x:Name="ReadFunc"
+                                                FontFamily="Oswald,Yahei"
+                                                SelectedIndex="{Binding Function, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource ReadMapFuncConverter}}"
+                                                SelectionChanged="ReadFunc_SelectionChanged">
+                                                <ComboBoxItem>(01) RWB</ComboBoxItem>
+                                                <ComboBoxItem>(02) RB</ComboBoxItem>
+                                                <ComboBoxItem>(03) RW</ComboBoxItem>
+                                                <ComboBoxItem>(04) R</ComboBoxItem>
+                                            </ComboBox>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                                <!--  Address  -->
+                                <DataGridTextColumn
+                                    Width="1.2*"
+                                    ElementStyle="{StaticResource contentCenterStyle}"
+                                    FontFamily="Oswald,Yahei"
+                                    Header="{x:Static Lang:Lang.TagAddress_Hex_}"
+                                    HeaderTemplate="{StaticResource HeaderStyle}">
+                                    <DataGridTextColumn.EditingElementStyle>
+                                        <Style BasedOn="{StaticResource contentTextboxStyle}" TargetType="{x:Type TextBox}">
+                                            <EventSetter Event="KeyDown" Handler="HEXKeyDown" />
+                                            <Setter Property="InputMethod.IsInputMethodEnabled" Value="False" />
+                                            <Setter Property="MaxLength" Value="4" />
+                                            <Setter Property="CharacterCasing" Value="Upper" />
+                                        </Style>
+                                    </DataGridTextColumn.EditingElementStyle>
+                                    <DataGridTextColumn.Binding>
+                                        <Binding
+                                            Mode="TwoWay"
+                                            NotifyOnValidationError="True"
+                                            Path="TagAddress"
+                                            UpdateSourceTrigger="LostFocus">
+                                            <Binding.ValidationRules>
+                                                <rules:HexRangValidationRule Max="65535" Min="0" />
+                                            </Binding.ValidationRules>
+                                        </Binding>
+                                    </DataGridTextColumn.Binding>
+                                </DataGridTextColumn>
+                                <!--  type  -->
+                                <DataGridTextColumn
+                                    Width="*"
+                                    Binding="{Binding Function, ConverterParameter=ReadMapFuc, Converter={StaticResource ReadMapTypeConverter}}"
+                                    EditingElementStyle="{StaticResource contentTextboxStyle}"
+                                    ElementStyle="{StaticResource contentCenterStyle}"
+                                    FontFamily="Oswald,Yahei"
+                                    Header="{x:Static Lang:Lang.Type}"
+                                    HeaderTemplate="{StaticResource HeaderStyle}"
+                                    IsReadOnly="True" />
+                                <!--  register  -->
+                                <DataGridTextColumn
+                                    Width="*"
+                                    ElementStyle="{StaticResource contentCenterStyle}"
+                                    FontFamily="Oswald,Yahei"
+                                    Header="{x:Static Lang:Lang.Register}"
+                                    HeaderTemplate="{StaticResource HeaderStyle}">
+                                    <DataGridTextColumn.EditingElementStyle>
+                                        <Style BasedOn="{StaticResource contentTextboxStyle}" TargetType="{x:Type TextBox}">
+                                            <EventSetter Event="KeyDown" Handler="NumberKeyDown" />
+                                            <Setter Property="InputMethod.IsInputMethodEnabled" Value="False" />
+                                            <Setter Property="MaxLength" Value="5" />
+                                        </Style>
+                                    </DataGridTextColumn.EditingElementStyle>
+                                    <DataGridTextColumn.Binding>
+                                        <Binding
+                                            Mode="TwoWay"
+                                            Path="Register"
+                                            UpdateSourceTrigger="PropertyChanged">
+                                            <Binding.ValidationRules>
+                                                <rules:RangeValidationRuleForint Max="65535" Min="0" />
+                                            </Binding.ValidationRules>
+                                        </Binding>
+                                    </DataGridTextColumn.Binding>
+                                </DataGridTextColumn>
+                                <!--  length  -->
+                                <DataGridTextColumn
+                                    Width="*"
+                                    ElementStyle="{StaticResource contentCenterStyle}"
+                                    FontFamily="Oswald,Yahei"
+                                    Header="{x:Static Lang:Lang.Length}"
+                                    HeaderTemplate="{StaticResource HeaderStyle}">
+                                    <DataGridTextColumn.EditingElementStyle>
+                                        <Style BasedOn="{StaticResource contentTextboxStyle}" TargetType="{x:Type TextBox}">
+                                            <EventSetter Event="KeyDown" Handler="NumberKeyDown" />
+                                            <Setter Property="InputMethod.IsInputMethodEnabled" Value="False" />
+                                            <Setter Property="MaxLength" Value="3" />
+                                        </Style>
+                                    </DataGridTextColumn.EditingElementStyle>
+                                    <DataGridTextColumn.Binding>
+                                        <Binding
+                                            Mode="TwoWay"
+                                            Path="Length"
+                                            UpdateSourceTrigger="PropertyChanged">
+                                            <Binding.ValidationRules>
+                                                <rules:RangeValidationRuleForint Max="100" Min="1" />
+                                            </Binding.ValidationRules>
+                                        </Binding>
+                                    </DataGridTextColumn.Binding>
+                                </DataGridTextColumn>
+                                <!--  comment  -->
+                                <DataGridTextColumn
+                                    Width="*"
+                                    Binding="{Binding Comment}"
+                                    ElementStyle="{StaticResource contentCenterStyle}"
+                                    Header="{x:Static Lang:Lang.Comment}"
+                                    HeaderTemplate="{StaticResource HeaderStyle}">
+                                    <DataGridTextColumn.EditingElementStyle>
+                                        <Style BasedOn="{StaticResource contentTextboxStyle}" TargetType="{x:Type TextBox}">
+                                            <Setter Property="MaxLength" Value="100" />
+                                        </Style>
+                                    </DataGridTextColumn.EditingElementStyle>
+                                </DataGridTextColumn>
+                                <!--  enablebutton  -->
+                                <DataGridTemplateColumn
+                                    Width="*"
+                                    Header="{x:Static Lang:Lang.Enable}"
+                                    HeaderTemplate="{StaticResource HeaderStyle}">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <Button
+                                                Margin="2"
+                                                Background="{DynamicResource AccentBackground}"
+                                                BorderThickness="0"
+                                                Command="{Binding Path=DataContext.SetEnableButton, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}"
+                                                Content="{Binding ButtonContent, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                Foreground="{DynamicResource AccentForeground}"
+                                                IsEnabled="{Binding Path=Function, Converter={StaticResource FuncToEnableConverter}}" />
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+
+                                <DataGridTemplateColumn
+                                    Width="*"
+                                    Header="{x:Static Lang:Lang.Delete}"
+                                    HeaderTemplate="{StaticResource HeaderStyle}">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <Button
+                                                Margin="2"
+                                                Background="{DynamicResource StopButtonColor}"
+                                                BorderThickness="0"
+                                                Command="{Binding Path=DataContext.DeleteMapItem, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}"
+                                                CommandParameter="{Binding Path=DataContext.ReadMap, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}"
+                                                Content="{x:Static Lang:Lang.Delete}"
+                                                Foreground="{DynamicResource AccentForeground}"
+                                                IsEnabled="{Binding Path=Function, Converter={StaticResource FuncToEnableConverter}}" />
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </Grid>
+                </TabItem>
+                <TabItem
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Stretch"
+                    Header="{x:Static Lang:Lang.WriteRegisterMapping}">
+                    <Grid>
+                        <DataGrid
+                            AutoGenerateColumns="False"
+                            CanUserReorderColumns="False"
+                            CanUserSortColumns="False"
+                            CellEditEnding="WriteMapDataGrid_CellEditEnding"
+                            FontFamily="Oswald,Yahei"
+                            ItemsSource="{Binding WriteMap, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                            SelectedItem="{Binding CurrentItem, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                            VerticalScrollBarVisibility="Auto">
+
+                            <DataGrid.Columns>
+                                <!--  index-w  -->
+                                <DataGridTextColumn
+                                    Width="0.7*"
+                                    Binding="{Binding Index, UpdateSourceTrigger=PropertyChanged}"
+                                    ElementStyle="{StaticResource contentCenterStyle}"
+                                    Header="{x:Static Lang:Lang.Index}"
+                                    HeaderTemplate="{StaticResource HeaderStyle}" />
+                                <!--  function-w  -->
+                                <DataGridTemplateColumn
+                                    Width="1.3*"
+                                    Header="{x:Static Lang:Lang.Function}"
+                                    HeaderTemplate="{DynamicResource HeaderStyle}">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <ComboBox
+                                                x:Name="WriteMapFuc"
+                                                SelectedIndex="{Binding Function, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource WriteMapFuncConverter}}"
+                                                SelectionChanged="WriteFunc_SelectionChanged">
+                                                <ComboBoxItem>(05) RWB</ComboBoxItem>
+                                                <ComboBoxItem>(06) RB</ComboBoxItem>
+                                            </ComboBox>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                                <!--  address-w  -->
+                                <DataGridTextColumn
+                                    Width="1.2*"
+                                    ElementStyle="{StaticResource contentCenterStyle}"
+                                    Header="{x:Static Lang:Lang.TagAddress_Hex_}"
+                                    HeaderTemplate="{StaticResource HeaderStyle}">
+                                    <DataGridTextColumn.EditingElementStyle>
+                                        <Style BasedOn="{StaticResource contentTextboxStyle}" TargetType="{x:Type TextBox}">
+                                            <EventSetter Event="KeyDown" Handler="HEXKeyDown" />
+                                            <Setter Property="InputMethod.IsInputMethodEnabled" Value="False" />
+                                            <Setter Property="MaxLength" Value="5" />
+                                            <Setter Property="CharacterCasing" Value="Upper" />
+                                        </Style>
+                                    </DataGridTextColumn.EditingElementStyle>
+                                    <DataGridTextColumn.Binding>
+                                        <Binding
+                                            Mode="TwoWay"
+                                            NotifyOnValidationError="True"
+                                            Path="TagAddress"
+                                            UpdateSourceTrigger="LostFocus">
+                                            <Binding.ValidationRules>
+                                                <rules:HexRangValidationRule Max="65535" Min="0" />
+                                            </Binding.ValidationRules>
+                                        </Binding>
+                                    </DataGridTextColumn.Binding>
+
+                                </DataGridTextColumn>
+                                <!--  type-w  -->
+                                <DataGridTextColumn
+                                    Width="*"
+                                    Binding="{Binding Function, Mode=OneWay, Converter={StaticResource WriteMapTypeConverter}}"
+                                    ElementStyle="{StaticResource contentCenterStyle}"
+                                    Header="{x:Static Lang:Lang.Type}"
+                                    HeaderTemplate="{StaticResource HeaderStyle}"
+                                    IsReadOnly="True" />
+                                <!--  register-w  -->
+                                <DataGridTextColumn
+                                    Width="*"
+                                    ElementStyle="{StaticResource contentCenterStyle}"
+                                    Header="{x:Static Lang:Lang.Register}"
+                                    HeaderTemplate="{StaticResource HeaderStyle}">
+                                    <DataGridTextColumn.EditingElementStyle>
+                                        <Style BasedOn="{StaticResource contentTextboxStyle}" TargetType="{x:Type TextBox}">
+                                            <EventSetter Event="KeyDown" Handler="NumberKeyDown" />
+                                            <Setter Property="InputMethod.IsInputMethodEnabled" Value="False" />
+                                            <Setter Property="MaxLength" Value="5" />
+                                        </Style>
+                                    </DataGridTextColumn.EditingElementStyle>
+                                    <DataGridTextColumn.Binding>
+                                        <Binding
+                                            Mode="TwoWay"
+                                            Path="Register"
+                                            UpdateSourceTrigger="PropertyChanged">
+                                            <Binding.ValidationRules>
+                                                <rules:RangeValidationRuleForint Max="65535" Min="0" />
+                                            </Binding.ValidationRules>
+                                        </Binding>
+                                    </DataGridTextColumn.Binding>
+                                </DataGridTextColumn>
+                                <!--  length-w  -->
+                                <DataGridTextColumn
+                                    Width="*"
+                                    ElementStyle="{StaticResource contentCenterStyle}"
+                                    Header="{x:Static Lang:Lang.Length}"
+                                    HeaderTemplate="{StaticResource HeaderStyle}">
+                                    <DataGridTextColumn.EditingElementStyle>
+                                        <Style BasedOn="{StaticResource contentTextboxStyle}" TargetType="{x:Type TextBox}">
+                                            <EventSetter Event="KeyDown" Handler="NumberKeyDown" />
+                                            <Setter Property="InputMethod.IsInputMethodEnabled" Value="False" />
+                                            <Setter Property="MaxLength" Value="3" />
+                                        </Style>
+                                    </DataGridTextColumn.EditingElementStyle>
+                                    <DataGridTextColumn.Binding>
+                                        <Binding
+                                            Mode="TwoWay"
+                                            Path="Length"
+                                            UpdateSourceTrigger="PropertyChanged">
+                                            <Binding.ValidationRules>
+                                                <rules:RangeValidationRuleForint Max="100" Min="1" />
+                                            </Binding.ValidationRules>
+                                        </Binding>
+                                    </DataGridTextColumn.Binding>
+                                </DataGridTextColumn>
+                                <!--  comment-w  -->
+                                <DataGridTextColumn
+                                    Width="*"
+                                    Binding="{Binding Comment}"
+                                    ElementStyle="{StaticResource contentCenterStyle}"
+                                    Header="{x:Static Lang:Lang.Comment}"
+                                    HeaderTemplate="{StaticResource HeaderStyle}">
+                                    <DataGridTextColumn.EditingElementStyle>
+                                        <Style BasedOn="{StaticResource contentTextboxStyle}" TargetType="{x:Type TextBox}">
+                                            <Setter Property="MaxLength" Value="100" />
+                                        </Style>
+                                    </DataGridTextColumn.EditingElementStyle>
+                                </DataGridTextColumn>
+                                <!--  enablebutton-w  -->
+                                <DataGridTemplateColumn
+                                    Width="*"
+                                    Header="{x:Static Lang:Lang.Enable}"
+                                    HeaderTemplate="{StaticResource HeaderStyle}">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <Button
+                                                Margin="2"
+                                                Background="{DynamicResource AccentBackground}"
+                                                BorderThickness="0"
+                                                Command="{Binding Path=DataContext.SetEnableButton, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}"
+                                                Content="{Binding ButtonContent, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                Foreground="{DynamicResource AccentForeground}"
+                                                IsEnabled="{Binding Path=Function, Converter={StaticResource FuncToEnableConverter}}" />
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                                <!--  deletebutton-w  -->
+                                <DataGridTemplateColumn
+                                    Width="*"
+                                    Header="{x:Static Lang:Lang.Delete}"
+                                    HeaderTemplate="{StaticResource HeaderStyle}">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <Button
+                                                Margin="2"
+                                                Background="{DynamicResource StopButtonColor}"
+                                                BorderThickness="0"
+                                                Command="{Binding Path=DataContext.DeleteMapItem, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}"
+                                                CommandParameter="{Binding Path=DataContext.WriteMap, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}"
+                                                Content="{x:Static Lang:Lang.Delete}"
+                                                Foreground="{DynamicResource AccentForeground}"
+                                                IsEnabled="{Binding Path=Function, Converter={StaticResource FuncToEnableConverter}}" />
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </Grid>
+                </TabItem>
+            </TabControl>
+
+        </Grid>
+    </controls:AnimationContentControl>
+</UserControl>
