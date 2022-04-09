@@ -1,0 +1,94 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildAllProjects Condition="'$(MSBuildVersion)' == '' Or '$(MSBuildVersion)' &lt; '16.0'">$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>1b8cf874-ca94-4725-b695-2bb5650e11de</SharedGUID>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <Import_RootNamespace>ModbusPart</Import_RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)Classes\Class_IniRW.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Classes\Class_MODBUS.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Classes\Class_ShareMem.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Converter\BaudrateSelectedIndexConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Converter\DataBitSelectedIndexConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Converter\FuncToEnableConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Converter\HexConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Converter\ReadMapFuncConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Converter\ReadMapTypeConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Converter\SerialTypeToVisibleConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Converter\StopBitSelectedIndexConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Converter\TagAmountConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Converter\TCPTypeToVisibleConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Converter\WriteMapFuncConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Converter\WriteMapTypeConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Data\DataHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Data\MapItem.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Data\PageVMHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Data\TreeViewNode.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ModbusEN.xaml.cs">
+      <DependentUpon>ModbusEN.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Rules\HexRangValidationRule.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Rules\IPRangeValidationRule.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Rules\MinValidationRuleFordouble.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Rules\MinValidationRuleForint .cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Rules\RangeValidationRuleFordouble.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Rules\RangeValidationRuleForint.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Sub\UCCommunication.xaml.cs">
+      <DependentUpon>UCCommunication.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Sub\UCDevice.xaml.cs">
+      <DependentUpon>UCDevice.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Sub\UCModbusSerial.xaml.cs">
+      <DependentUpon>UCModbusSerial.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Sub\UCModbusTCP.xaml.cs">
+      <DependentUpon>UCModbusTCP.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)UCModbus.xaml.cs">
+      <DependentUpon>UCModbus.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModel\CommunicationViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModel\DeviceViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModel\ModbusENViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModel\ModusViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModel\SerialViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModel\TCPViewModel.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="$(MSBuildThisFileDirectory)ModbusEN.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Sub\UCCommunication.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Sub\UCDevice.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Sub\UCModbusSerial.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Sub\UCModbusTCP.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)UCModbus.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+</Project>

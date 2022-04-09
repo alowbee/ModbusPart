@@ -118,153 +118,156 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Add Device" xml:space="preserve">
-    <value>增加設備</value>
+    <value>Add Device</value>
   </data>
   <data name="AddCOM" xml:space="preserve">
-    <value>增加COM</value>
+    <value>Add COM</value>
   </data>
   <data name="AddTCP" xml:space="preserve">
-    <value>增加 TCP/IP</value>
+    <value>Add TCP</value>
   </data>
   <data name="Baudrate" xml:space="preserve">
-    <value>鮑率</value>
+    <value>Baudrate</value>
   </data>
   <data name="COM" xml:space="preserve">
-    <value>通訊埠(COM)</value>
+    <value>COM</value>
   </data>
   <data name="COM Port Amount" xml:space="preserve">
-    <value>COM通訊埠數量</value>
+    <value>COM Port Amount</value>
   </data>
   <data name="Comment" xml:space="preserve">
-    <value>說明</value>
+    <value>Comment</value>
   </data>
   <data name="Data Bit" xml:space="preserve">
-    <value>資料位元</value>
+    <value>Data Bit</value>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>Delete</value>
   </data>
   <data name="Delete this Port" xml:space="preserve">
-    <value>刪除此一通道</value>
+    <value>Delete this Port</value>
   </data>
   <data name="Deletethisdevice" xml:space="preserve">
-    <value>刪除此設備</value>
+    <value>Delete this device</value>
   </data>
   <data name="Deletethisline" xml:space="preserve">
-    <value>確認刪除當前行數據？</value>
+    <value>Whether confirm delete this line?</value>
   </data>
   <data name="Device Amount" xml:space="preserve">
-    <value>連綫設備數量</value>
+    <value>Device Amount</value>
   </data>
   <data name="Disable" xml:space="preserve">
-    <value>關閉</value>
+    <value>Disable</value>
   </data>
   <data name="Enable" xml:space="preserve">
-    <value>致能</value>
+    <value>Enable</value>
   </data>
   <data name="Enter" xml:space="preserve">
-    <value>確認</value>
+    <value>Enter</value>
   </data>
   <data name="Error" xml:space="preserve">
-    <value>錯誤</value>
+    <value>Error</value>
   </data>
   <data name="ErrorRegister" xml:space="preserve">
-    <value>錯誤暫存器</value>
+    <value>Error Register(D)</value>
   </data>
   <data name="Function" xml:space="preserve">
-    <value>功能碼</value>
+    <value>Function</value>
   </data>
   <data name="GatewayName" xml:space="preserve">
-    <value>通訊線名稱</value>
+    <value>GatewayName</value>
   </data>
   <data name="IMP Slave Station" xml:space="preserve">
-    <value>IMP本機從站站號</value>
+    <value>IMP Slave Station</value>
   </data>
   <data name="Index" xml:space="preserve">
-    <value>編號</value>
+    <value>Index</value>
   </data>
   <data name="IP Address" xml:space="preserve">
-    <value>IP地址</value>
+    <value>IP Address</value>
   </data>
   <data name="IPisNull" xml:space="preserve">
-    <value>未設置IP地址</value>
+    <value>IP address not set</value>
   </data>
   <data name="Length" xml:space="preserve">
-    <value>長度</value>
+    <value>Length</value>
   </data>
   <data name="MAddress" xml:space="preserve">
-    <value>M 地址</value>
+    <value>M Address</value>
   </data>
   <data name="ModbusSetting" xml:space="preserve">
-    <value>Modbus 設置</value>
+    <value>Modbus Setting</value>
   </data>
   <data name="MRegister" xml:space="preserve">
-    <value>M 暫存器</value>
+    <value>M Register</value>
   </data>
   <data name="Name" xml:space="preserve">
-    <value>名稱</value>
+    <value>Name</value>
   </data>
   <data name="NotCorrectIP" xml:space="preserve">
-    <value>當前輸入文本為非法IP地址</value>
+    <value>Illegal IP</value>
   </data>
   <data name="Parity" xml:space="preserve">
-    <value>奇偶</value>
+    <value>Parity</value>
   </data>
   <data name="Port" xml:space="preserve">
-    <value>通訊埠</value>
+    <value>Port</value>
   </data>
   <data name="Protocol" xml:space="preserve">
-    <value>通訊格式</value>
+    <value>Protocol</value>
   </data>
   <data name="Range:0~255" xml:space="preserve">
-    <value>範圍:0~255</value>
+    <value>Range:0~255</value>
   </data>
   <data name="Range:1-65535" xml:space="preserve">
-    <value>範圍:1-65535</value>
+    <value>Range:1-65535</value>
   </data>
   <data name="ReadLength" xml:space="preserve">
-    <value>讀取最大長度</value>
+    <value>Read Length(Max.)</value>
   </data>
   <data name="ReadRegisterMapping" xml:space="preserve">
-    <value>讀取記憶體配對</value>
+    <value>Read Register Mapping</value>
   </data>
   <data name="Register" xml:space="preserve">
-    <value>暫存器</value>
+    <value>Register</value>
   </data>
   <data name="Retry" xml:space="preserve">
-    <value>重試次數</value>
+    <value>Retry</value>
   </data>
   <data name="Station" xml:space="preserve">
-    <value>站號</value>
+    <value>Station</value>
   </data>
   <data name="Stop Bit" xml:space="preserve">
-    <value>停止位元</value>
+    <value>Stop Bit</value>
   </data>
   <data name="TagAddress(Hex)" xml:space="preserve">
-    <value>通訊地址(16進制)</value>
+    <value>Tag Address(Hex)</value>
   </data>
   <data name="TagAmount" xml:space="preserve">
-    <value>通訊地址數量</value>
+    <value>Tag Amount</value>
   </data>
   <data name="TCP Port" xml:space="preserve">
-    <value>網絡通訊埠</value>
+    <value>TCP Port</value>
   </data>
   <data name="TCP Port Amount" xml:space="preserve">
-    <value>網絡IP通訊埠數量</value>
+    <value>TCP Port Amount</value>
   </data>
   <data name="Time Out" xml:space="preserve">
-    <value>逾時時間</value>
+    <value>Time Out</value>
   </data>
   <data name="Type" xml:space="preserve">
-    <value>類別</value>
+    <value>Type</value>
   </data>
   <data name="Unit:ms" xml:space="preserve">
-    <value>單位:毫秒</value>
+    <value>Unit:ms</value>
   </data>
   <data name="Update Period" xml:space="preserve">
-    <value>更新速度</value>
+    <value>Update Period</value>
   </data>
   <data name="Warning" xml:space="preserve">
-    <value>警告</value>
+    <value>Warning</value>
   </data>
   <data name="WriteRegisterMapping" xml:space="preserve">
-    <value>寫入記憶體配對</value>
+    <value>Write Register Mapping</value>
   </data>
 </root>

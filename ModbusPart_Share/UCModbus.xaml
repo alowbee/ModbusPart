@@ -5,7 +5,7 @@
     xmlns:Data="clr-namespace:ModbusPart.Data"
     xmlns:Lang="clr-namespace:ModbusPart.Properties.Lang"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-   xmlns:i= "http://schemas.microsoft.com/xaml/behaviors"
+    xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:model="clr-namespace:ModbusPart.ViewModel"
     d:DesignHeight="450"

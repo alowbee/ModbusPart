@@ -4,8 +4,6 @@ using ModbusPart.Data;
 using ModbusPart.Sub;
 using ModbusPart.ViewModel;
 using System;
-using System.Collections.ObjectModel;
-using System.Threading.Tasks;
 using System.Timers;
 using System.Windows;
 using System.Windows.Controls;
@@ -24,7 +22,7 @@ namespace ModbusPart
         /// </summary>
         internal static ModusViewModel MainViewModel = new ModusViewModel();
         // private DispatcherTimer timer = new DispatcherTimer();
-        private Timer timer = new Timer(1000);
+        private System.Timers.Timer timer = new System.Timers.Timer(1000);
         internal static bool FileSaveTrg = false;
         public UCModbus()
         {
