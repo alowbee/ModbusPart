@@ -1,11 +1,12 @@
 ﻿using ModbusPart.Sub;
 using Prism.Mvvm;
+using System;
 using System.ComponentModel;
 using System.Linq;
 
 namespace ModbusPart.Data
 {
-    public class MapItem : BindableBase
+    public class MapItem : BindableBase, IComparable<MapItem>
     {
         private int index;
         public int Index
@@ -94,7 +95,7 @@ namespace ModbusPart.Data
             get
             {
 
-                if (Function >-1 && TagAddress != null && Length != null && Register != null)
+                if (Function > -1 && TagAddress != null && Length != null && Register != null)
                     isComplete = true;
                 else isComplete = false;
 
@@ -113,6 +114,29 @@ namespace ModbusPart.Data
             this.Function = -1;
         }
 
-        
+        public int CompareTo(MapItem other)
+        {
+
+            if (this.Function < 0)
+                return 1;
+            else if (other.Function < 0)
+                return -1;
+            else if (this.Function < other.Function)
+                return -1;
+            else if (this.Function == other.Function)
+            {
+                if (this.Register == null)
+                    return 1;
+                else if (other.Register == null)
+                    return -1;
+                else if (this.Register < other.Register)
+                    return -1;
+                else
+                    return 1;
+
+            }
+            else
+                return 1;
+        }
     }
 }

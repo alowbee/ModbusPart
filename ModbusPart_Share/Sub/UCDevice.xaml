@@ -11,6 +11,7 @@
     xmlns:local="clr-namespace:ModbusPart.Sub"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:rules="clr-namespace:ModbusPart.Rules"
+    xmlns:scm="clr-namespace:System.ComponentModel;assembly=WindowsBase"
     xmlns:wpfassist="clr-namespace:WPFToolkit.Assist;assembly=WPFToolkit"
     FontSize="{DynamicResource NormalFontSize}"
     Foreground="{DynamicResource PrimaryForeground}"
@@ -179,7 +180,13 @@
                             </controls:NumberTextBox.Text>
                         </controls:NumberTextBox>
                     </Grid>
-                    <Grid />
+                    <Button
+                        Margin="2"
+                        Background="Red"
+                        BorderBrush="DarkRed"
+                        Command="{Binding DeleteDeviceCommand}"
+                        Content="{x:Static Lang:Lang.Deletethisdevice}" />
+
                     <Grid Margin="2" IsEnabled="{Binding IsEnable, Mode=OneWay}">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="130" />
@@ -247,11 +254,16 @@
                         </controls:NumberTextBox>
 
                     </Grid>
-                    <Button
-                        Background="Red"
-                        BorderBrush="DarkRed"
-                        Command="{Binding DeleteDeviceCommand}"
-                        Content="{x:Static Lang:Lang.Deletethisdevice}" />
+                    <UniformGrid Columns="2">
+                        <Button
+                            Margin="2"
+                            Command="{Binding SortMapItemCommand}"
+                            Content="列表排序" />
+                        <Button
+                            Margin="2"
+                            Command="{Binding InsertMapItemCommand}"
+                            Content="在选中行插入" />
+                    </UniformGrid>
 
                 </UniformGrid>
             </Grid>
@@ -261,7 +273,7 @@
                 Grid.ColumnSpan="2"
                 Margin="5,0"
                 IsEnabled="{Binding IsEnable, Mode=OneWay}">
-                <TabItem Header="{x:Static Lang:Lang.ReadRegisterMapping}">
+                <TabItem Header="{x:Static Lang:Lang.ReadRegisterMapping}" IsSelected="{Binding IsReadMap, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                     <Grid>
                         <DataGrid
                             AutoGenerateColumns="False"
@@ -432,7 +444,7 @@
                                                 Margin="2"
                                                 Background="{DynamicResource StopButtonColor}"
                                                 BorderThickness="0"
-                                                Command="{Binding Path=DataContext.DeleteMapItem, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}"
+                                                Command="{Binding Path=DataContext.DeleteSelectedMapItemCommand, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}"
                                                 CommandParameter="{Binding Path=DataContext.ReadMap, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}"
                                                 Content="{x:Static Lang:Lang.Delete}"
                                                 Foreground="{DynamicResource AccentForeground}"

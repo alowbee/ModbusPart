@@ -35,7 +35,7 @@
                 ItemsSource="{Binding NodeTreeItems}"
                 TreeViewItem.Selected="TreeView_Selected">
                 <TreeView.ItemContainerStyle>
-                    <Style BasedOn="{StaticResource TreeViewItemBaseStyle}"  TargetType="{x:Type TreeViewItem}">
+                    <Style BasedOn="{StaticResource TreeViewItemBaseStyle}" TargetType="{x:Type TreeViewItem}">
                         <Setter Property="IsExpanded" Value="{Binding Path=IsExpanded, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                         <Setter Property="IsSelected" Value="{Binding Path=IsSelected, Mode=TwoWay}" />
                     </Style>
@@ -51,7 +51,7 @@
             </TreeView>
 
         </Grid>
-     
+
         <StackPanel
             Grid.Row="0"
             Grid.Column="2"

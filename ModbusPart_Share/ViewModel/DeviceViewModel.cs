@@ -7,6 +7,7 @@ using Prism.Mvvm;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Windows;
 using WPFToolkit.Controls;
 using WPFToolkit.Data.Enum;
@@ -101,6 +102,19 @@ namespace ModbusPart.ViewModel
             }
         }
 
+        private bool isReadMap = true;
+
+        public bool IsReadMap
+        {
+            get { return isReadMap; }
+            set
+            {
+                isReadMap = value;
+                RaisePropertyChanged(nameof(CurrentItem));
+            }
+        }
+
+
         private ObservableCollection<MapItem> readMap;
         public ObservableCollection<MapItem> ReadMap
         {
@@ -127,9 +141,10 @@ namespace ModbusPart.ViewModel
         }
 
         public DelegateCommand SetEnableButton { get; set; }
-        public DelegateCommand<ObservableCollection<MapItem>> DeleteMapItem { get; set; }
-
         public DelegateCommand DeleteDeviceCommand { get; set; }
+        public DelegateCommand<ObservableCollection<MapItem>> DeleteSelectedMapItemCommand { get; set; }
+        public DelegateCommand SortMapItemCommand { get; set; }
+        public DelegateCommand InsertMapItemCommand { get; set; }
 
         //enable
         private void SetEnable()
@@ -151,7 +166,7 @@ namespace ModbusPart.ViewModel
                     ModbusInfo.Serial[portindex].EnableSerialDevice[deviceindex] = IsEnable;
                 }
                 UCModbus.FileSaveTrg = true;
-           
+
 
             }
         }
@@ -175,7 +190,7 @@ namespace ModbusPart.ViewModel
                 UCModbus.MainViewModel.CurrentNode.Name = Name;
                 UCModbus.MainViewModel.Pagetitle = Name;
                 UCModbus.FileSaveTrg = true;
-       
+
 
             }
 
@@ -198,7 +213,7 @@ namespace ModbusPart.ViewModel
                     ModbusInfo.Serial[portindex].Error_reg[deviceindex] = Error_reg;
                 }
                 UCModbus.FileSaveTrg = true;
-               
+
             }
 
         }
@@ -220,7 +235,7 @@ namespace ModbusPart.ViewModel
                     ModbusInfo.Serial[portindex].Station[deviceindex] = Station;
                 }
                 UCModbus.FileSaveTrg = true;
-               
+
             }
         }
         //Device_Read_Limitlen
@@ -241,10 +256,9 @@ namespace ModbusPart.ViewModel
                     ModbusInfo.Serial[portindex].Device_Read_Limitlen[deviceindex] = Device_Read_Limitlen;
                 }
                 UCModbus.FileSaveTrg = true;
-              
+
             }
         }
-
 
         //delete Device
         private void DeleteDevice()
@@ -301,8 +315,9 @@ namespace ModbusPart.ViewModel
 
             }
             UCModbus.FileSaveTrg = true;
-          
+
         }
+
         //deleta mapitem
         private void DeleteSelectedMapItem(ObservableCollection<MapItem> map)
         {
@@ -328,11 +343,46 @@ namespace ModbusPart.ViewModel
                 if (map == WriteMap)
                     DataHelper.SetWriteMap();
                 UCModbus.FileSaveTrg = true;
-            
+
 
             }
 
         }
+
+
+        private void InsertSelectedMapItem(ObservableCollection<MapItem> map)
+        {
+            if (map.Count > 0)
+            {
+                var index = map.IndexOf(CurrentItem);
+                map.Insert(index,new MapItem() {Index=index+1 });
+                for (int i = index+1; i < map.Count; i++)
+                {
+                    map[i].Index = i+1;
+                }
+
+            }
+            else
+                return;
+
+        }
+
+
+        private void SortMapItem(ObservableCollection<MapItem> map)
+        {
+            if (map.Count > 0)
+            {
+                List<MapItem> sortedList = map.ToList();
+                sortedList.Sort();
+                map.Clear();
+                for (int i = 0; i < sortedList.Count; i++)
+                {
+                    sortedList[i].Index = i + 1;
+                    map.Add(sortedList[i]);
+                }
+            }
+        }
+
 
 
         public DeviceViewModel()
@@ -356,8 +406,29 @@ namespace ModbusPart.ViewModel
                 }
                 window.ShowDialog();
             });
-            this.DeleteMapItem = new DelegateCommand<ObservableCollection<MapItem>>(DeleteSelectedMapItem);
-            this.DeleteDeviceCommand = new DelegateCommand(DeleteDevice);
+
+            this.DeleteSelectedMapItemCommand = new DelegateCommand<ObservableCollection<MapItem>>(DeleteSelectedMapItem);
+            this.SortMapItemCommand = new DelegateCommand(
+                () =>
+                {
+                    if (isReadMap)
+                        SortMapItem(ReadMap);
+                    else
+                        SortMapItem(WriteMap);
+
+                    UCModbus.FileSaveTrg = true;
+                });
+            this.InsertMapItemCommand = new DelegateCommand(
+            () =>
+            {
+                if (isReadMap)
+                    InsertSelectedMapItem(ReadMap);
+                else
+                    InsertSelectedMapItem(WriteMap);
+
+                UCModbus.FileSaveTrg = true;
+            });
+
         }
 
     }
